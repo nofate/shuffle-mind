@@ -1,0 +1,98 @@
+@base: #660000;
+@table: #337755;
+
+h1 {
+	color: @base;
+}
+
+h2 {
+	color: lighten(@base, 30%);
+}
+
+
+
+#table {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 200px;
+    overflow: auto;
+
+    background: @table;
+}
+
+#bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    display: table;
+    padding: 4px;
+    overflow: hidden;
+
+}
+
+#chatbox {
+	overflow-y: scroll;
+    height: 178px;
+}
+
+#message {
+    display:block;
+    width:100%;
+    padding:0;
+    margin: 0;
+    border-width:0;
+}
+
+#cards {
+    margin: 0 auto;
+    position: relative;
+}
+
+#bottom-bar #chatpanel {
+    display:table-cell;
+    width:80%;
+    background-color: orange;
+}
+
+#bottom-bar #playerspanel {
+    background-color: yellow;
+    display:table-cell;
+    width: 20%;
+    overflow-y: scroll;
+}
+
+#bottom-bar #buttonspanel {
+    background-color: yellow;
+    display:table-cell;
+    //float: right;
+    min-width: 100px;
+}
+
+.card-placeholder {
+    margin: 4px;
+    width: 240px;
+    height: 346px;
+    border: 4px white dotted;
+    display: inline;
+    float: left;
+}
+
+.panel {
+    border: 1px #708090 solid;
+   // height: 100%;
+    overflow: none;
+}
+
+.button{
+	display: inline;
+    cursor: pointer;
+	border: 1px;
+	padding: 4px;
+    margin: 2px;
+	background: #dddddd;
+}

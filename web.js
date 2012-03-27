@@ -72,13 +72,18 @@ Object.size = function(obj) {
 }
 
 var players = new Array();
+var users = new Array();
 
 
 
 socket.on('sconnection', function(client, session) {
 	console.log('New connection from: ', session.user.login);
 	client.emit('greet', 'Hello, ' + session.user.login);
-    socket.sockets.emit('user-list', { type:'add', user: session.user.login });
+    users.push(session.user.login);
+    socket.sockets.emit('user-list', { type:'add', users: session.user.login });
+    client.emit('user-list', { type: 'list', users: users });
+
+
 
 	client.on('msg', function(data) {
 		console.log('Message from', session.user.login, ': ', data);
@@ -115,8 +120,22 @@ socket.on('sconnection', function(client, session) {
     });
 
     client.on('disconnect', function() {
-        socket.sockets.emit('user-list', { type:'remove', user: session.user.login });
+        socket.sockets.emit('user-list', { type:'remove', users: session.user.login });
         console.log('User '+ session.user.login + ' disconnected');
+
+        var len = users.length;
+        for (var i = 0; i < len; i++) {
+            if (users[i] == session.user.login) {
+                if (i == 0) {
+                    users = users.slice(1);
+                } else if (i == (len - 1)) {
+                    users = users.slice(0, len - 1);
+                } else {
+                    users = users.slice(0, i).concat(users.slice(i + 1));
+                }
+                break;
+            }
+        }
     });
 });
 

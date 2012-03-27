@@ -9,6 +9,7 @@ socket.on('msg', function(data) {
 	renderMessage(data);
 });
 
+
 socket.on('sys', function(data) {
     if (data.type == 'join') {
         renderSystemMessage("User <b>" + data.user + "</b> joins game.")
@@ -44,15 +45,30 @@ socket.on('ladder', function(data) {
 
 socket.on('user-list', function(data) {
 
+    console.log('user-list: ' + data.type + ' ' + data.users);
+
     if (data.type == 'add') {
-        var html = "User <b>" + data.user + "</b> connected.";
+        var html = "User <b>" + data.users + "</b> connected.";
         renderSystemMessage(html);
+
+        html = '<div id="player_' + data.users + '">' + data.users + '</div>';
+        $("#players").append(html);
     }
     else if (data.type == 'remove') {
-        var html = "User <b>" + data.user + "</b> disconnected.";
+        var html = "User <b>" + data.users + "</b> disconnected.";
+        $("#player_" + data.users).remove();
         renderSystemMessage(html);
     }
+    else if (data.type == 'list') {
+        $("#players").empty();
+        var html = '';
+        for (key in data.users) {
+            var html = html + '<div id="player_' + data.users + '">' + data.users[key] +'</div>';
+        }
+        $("#players").append(html);
+    }
 });
+
 
 function sendMessage() {
     var message = $("#message").val();
